@@ -1,44 +1,42 @@
-# webserv
-# Socket
-A socket is a software object that enables network communication between two processes or applications running on different machines or within the same machine. It is a fundamental building block of network programming, allowing processes to send and receive data over a network.
+Webserv
+This project is a simple HTTP server implementation in C++ 98, designed to serve web pages and handle HTTP requests. The server is capable of serving static websites, handling various HTTP methods like GET, POST, and DELETE, supporting file uploads from clients, and more.
 
-A socket is identified by a unique combination of an IP address and a port number. When a process wants to communicate with another process, it creates a socket object and binds it to a specific IP address and port number. The other process can then use the same IP address and port number to connect to the socket and communicate with the first process.
+Introduction
+Webserv is a project aimed at understanding the intricacies of the HTTP protocol and implementing a basic HTTP server from scratch. The server can be tested using a web browser or tools like Postman, and it adheres to the HTTP 1.1 standard. While the project doesn't require full implementation of the RFC, reading it can provide valuable insights for developing the required features.
 
-There are two types of sockets: TCP sockets and UDP sockets. TCP sockets provide reliable, stream-oriented communication between processes, while UDP sockets provide connectionless, datagram-based communication.
+Features
 
-Socket programming involves using a variety of socket functions to create, configure, connect, send, and receive data over sockets. These functions are typically provided by the operating system and can be accessed using socket APIs in programming languages such as C, C++, Python, Java, and others.
+Configuration File: Webserv accepts a configuration file as an argument or uses a default path. This file allows users to specify server settings such as port, host, server names, error pages, and more.
+Non-blocking I/O: The server is designed to be non-blocking, ensuring that it never blocks while handling client requests. It utilizes a single select() (or equivalent) for all I/O operations, checking both read and write operations simultaneously.
+HTTP Methods: Webserv supports essential HTTP methods such as GET, POST, and DELETE, allowing clients to interact with the server and manipulate resources.
+Static Website Hosting: The server can serve fully static websites, delivering HTML documents, images, style sheets, scripts, and other resources to clients.
+File Uploads: Clients can upload files to the server, expanding its capabilities beyond simple content delivery.
+Error Handling: Webserv provides default error pages if none are provided, ensuring a consistent user experience in case of errors.
+CGI Execution: The server supports CGI execution based on certain file extensions (e.g., .php), enabling dynamic content generation.
 
-Sockets are widely used in client-server applications, web applications, email applications, and many other networked applications. They provide a flexible and powerful means of exchanging data over a network and have become a key part of modern network programming. 
-# To create socket
-you have to use the socket function to create a socket object.
-```#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+Multiplexing and Socket Management
 
-int main() {
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
-        // error handling
-    }
+Webserv utilizes a multiplexing concept, which allows it to efficiently manage multiple client connections using a single select() (or equivalent) call. This approach maximizes the server's responsiveness and scalability by handling I/O operations for all connected clients in a non-blocking manner.
+Socket Handling: The server creates and manages sockets for incoming client connections, using functions like socket(), bind(), and listen(). Each socket is associated with a file descriptor (FD), which is monitored by the select() function for read and write events.
+Selecting Mechanism: Webserv employs the select() function to monitor multiple file descriptors simultaneously, including sockets for incoming client connections and file descriptors for other I/O operations. By efficiently polling all relevant descriptors, the server can respond to events in a timely manner without blocking.
 
-    // use the socket object
-    // ...
+Parsing HTTP Requests
 
-    return 0;
-}
-```
-In this example, the `socket` function creates a socket object of the specified type (`SOCK_STREAM` for a TCP socket) and returns a file descriptor (`sockfd`) that can be used to reference the socket object in subsequent function calls.
+Parsing HTTP requests is a crucial aspect of the server's functionality, as it enables the server to understand and process client requests effectively. Webserv parses incoming HTTP requests to extract relevant information such as request method, URI, headers, and body content.
+Request Parsing: Upon receiving an HTTP request from a client, Webserv parses the request to extract essential information. This includes parsing the request line to determine the request method and URI, parsing headers to extract additional metadata, and handling the request body if present.
+URI Handling: Webserv interprets the URI provided in the request to determine the requested resource on the server. This includes mapping the URI to corresponding files or routes specified in the server configuration and handling dynamic routing if applicable.
+Header Processing: The server parses HTTP headers to extract relevant information such as content type, content length, and any custom headers provided by the client. This information is used to determine how to handle the request and generate an appropriate response.
 
-Note that there are other options you can pass to the `socket` function depending on your needs, such as the protocol to use (0 for the default protocol) and the domain (e.g., `AF_INET`for IPv4 or `AF_INET6` for IPv6). You'll also need to set up the socket address and bind the socket to a port if you want to accept incoming connections.
-The `AF_UNIX` domain is used for communication between processes on the same machine using Unix domain sockets.
-By specifying the domain parameter in the `socket` function, you are telling the operating system which protocol family to use when creating the socket.
 
-`domain`: Specifies the protocol family or domain that the socket will use. For example, `AF_INET` for `IPv4`, AF_INET6 for IPv6, or AF_UNIX for Unix domain sockets.
-`type`: Specifies the type of socket to create. This can be SOCK_STREAM for a TCP socket or `SOCK_DGRAM` for a UDP socket, among others.
-`protocol`: Specifies the specific protocol to be used with the socket. For example, `IPPROTO_TCP` for TCP or `IPPROTO_UDP` for UDP. If the protocol argument is set to 0, the socket function will choose the default protocol for the specified domain and type.
-In general, when you call the `socket` function, you need to specify the domain, type, and protocol parameters that are appropriate for your specific networking needs. The exact values to use for each parameter will depend on the specific application you are developing and the network protocols you need to work with.
 
-After creating the socket, you can use other socket functions (e.g., `bind`, `connect`, `listen`, `accept`) to configure the socket and establish connections. You can also use functions such as `send` and `recv` to send and receive data over the socket, and `close` to release the socket resources when you are done with it.
+Requirements
 
-`htons` function is used to convert the port number from host byte order to network byte order.
-# 
+Compiler: Compile your code with c++ and the flags -Wall -Wextra -Werror.
+Standard: Your code must comply with the C++ 98 standard and should still compile with the flag -std=c++98.
+External Libraries: Any external library and Boost libraries are forbidden.
+Testing: Stress test your server to ensure it stays available at all costs and meets performance expectations.
+
+Bonus Features
+
+Cookies and Session Management: Support cookies and session management for enhanced client-server interaction.
+Multiple CGI: Handle multiple CGI for increased flexibility in dynamic content generation
