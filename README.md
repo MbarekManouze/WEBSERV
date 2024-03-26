@@ -29,14 +29,15 @@ Request Parsing: Upon receiving an HTTP request from a client, Webserv parses th
 URI Handling: Webserv interprets the URI provided in the request to determine the requested resource on the server. This includes mapping the URI to corresponding files or routes specified in the server configuration and handling dynamic routing if applicable.
 Header Processing: The server parses HTTP headers to extract relevant information such as content type, content length, and any custom headers provided by the client. This information is used to determine how to handle the request and generate an appropriate response.
 
+## Bonus Features
+
+Cookies and Session Management: Support cookies and session management for enhanced client-server interaction.
+Multiple CGI: Handle multiple CGI for increased flexibility in dynamic content generation
+
+
 ## Requirements
 
 Compiler: Compile your code with c++ and the flags -Wall -Wextra -Werror.
 Standard: Your code must comply with the C++ 98 standard and should still compile with the flag -std=c++98.
 External Libraries: Any external library and Boost libraries are forbidden.
 Testing: Stress test your server to ensure it stays available at all costs and meets performance expectations.
-
-Bonus Features
-
-Cookies and Session Management: Support cookies and session management for enhanced client-server interaction.
-Multiple CGI: Handle multiple CGI for increased flexibility in dynamic content generation
