@@ -1,4 +1,5 @@
 WebServ
+
 This project is a simple HTTP server implementation in C++ 98, designed to serve web pages and handle HTTP requests. The server is capable of serving static websites, handling various HTTP methods like GET, POST, and DELETE, supporting file uploads from clients, and more.
 
 Introduction
