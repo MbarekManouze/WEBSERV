@@ -10,7 +10,7 @@ Webserv is a project aimed at understanding the intricacies of the HTTP protocol
 
 Configuration File: Webserv accepts a configuration file as an argument or uses a default path. This file allows users to specify server settings such as port, host, server names, error pages, and more.
 
-Non-blocking I/O: The server is designed to be non-blocking, ensuring that it never blocks while handling client requests. It utilizes a single select() (or equivalent) for all I/O operations, checking both read and write operations simultaneously.
+**Non-blocking I/O**: The server is designed to be non-blocking, ensuring that it never blocks while handling client requests. It utilizes a single select() (or equivalent) for all I/O operations, checking both read and write operations simultaneously.
 
 **HTTP Methods**: Webserv supports essential HTTP methods such as GET, POST, and DELETE, allowing clients to interact with the server and manipulate resources.
 
